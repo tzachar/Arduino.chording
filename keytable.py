@@ -1,4 +1,6 @@
-import sys
+import collections
+import fileinput
+import curses.ascii
 
 def all_combinations(num_bits, pressed):
     if num_bits < pressed:
@@ -21,13 +23,27 @@ def all_combinations(num_bits, pressed):
     return ans
 
 
+def frequencies():
+    freqs = collections.defaultdict(lambda: 0)
+    for line in fileinput.input():
+        for c in line.lower():
+            freqs[c] = freqs[c] + 1
+
+    return freqs
+
+
+def sort_by_freq(freqs):
+    return reversed(sorted(freqs.keys(), key=lambda x: freqs[x]))
+
+
 if __name__ == '__main__':
-    chars_by_freq = [x.strip() for x in open(sys.argv[1]).readlines()]
+    freqs = frequencies()
+    chars_by_freq = [x for x in sort_by_freq(freqs) if curses.ascii.isprint(x)]
     presses = 1
-    btns = all_combinations(6, presses)
+    btns = all_combinations(8, presses)
     for c in chars_by_freq:
         if len(btns) == 0:
             presses = presses + 1
-            btns = all_combinations(6, presses)
+            btns = all_combinations(8, presses)
         print 'regular_scancodes[%d] = \'%s\';' % (btns[0], c)
         btns = btns[1:]

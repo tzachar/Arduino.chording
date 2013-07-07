@@ -1,14 +1,16 @@
 #include <Arduino.h>
 
-#define BTN_0_PIN 5
-#define BTN_1_PIN 5
+#define BTN_0_PIN 2
+#define BTN_1_PIN 3
 #define BTN_2_PIN 4
-#define BTN_3_PIN 3
-#define BTN_4_PIN 2
-#define BTN_5_PIN 6
+#define BTN_3_PIN 5
+#define BTN_4_PIN 6
+#define BTN_5_PIN 7
+#define BTN_6_PIN 8
+#define BTN_7_PIN 9
 //thumbs
-#define BTN_6_PIN 7
-#define BTN_7_PIN 8
+#define BTN_THUMB_L 10
+#define BTN_THUMB_R 11
 
 struct chord_t
 {
@@ -20,6 +22,9 @@ struct chord_t
 	bool btn_5 : 1;
 	bool btn_6 : 1;
 	bool btn_7 : 1;
+	bool btn_thumb_l : 1;
+	bool btn_thumb_r : 2;
+	
 
 	bool operator==(const chord_t &other) const
 	{
@@ -64,7 +69,9 @@ struct chord_t
 			btn_3 == false && 
 			btn_4 == false && 
 			btn_5 == false && 
-			(btn_6 == true || btn_7 == true);
+			btn_6 == false && 
+			btn_7 == false && 
+			(btn_thumb_r == true || btn_thumb_l == true);
 	}
 
 	void print() const
@@ -77,10 +84,12 @@ struct chord_t
 		Serial.print(btn_5);
 		Serial.print(btn_6);
 		Serial.println(btn_7);
+		Serial.print(btn_thumb_r);
+		Serial.println(btn_thumb_l);
 	}
 };
 
-chord_t empty_chord = {0, 0, 0, 0, 0, 0, 0, 0};
+chord_t empty_chord = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool chord_t::empty() const
 {
 	return *this == empty_chord;
@@ -96,6 +105,8 @@ bool chord_t::empty() const
 		digitalRead(BTN_5_PIN) == LOW,\
 		digitalRead(BTN_6_PIN) == LOW,\
 		digitalRead(BTN_7_PIN) == LOW,\
+		digitalRead(BTN_THUMB_L) == LOW,\
+		digitalRead(BTN_THUMB_R) == LOW,\
 	}
 
 static const unsigned long debounce_delay = 60;
@@ -129,67 +140,83 @@ chord_t from_btns()
 	}
 }
 
-unsigned char regular_scancodes[128] = {0};
-unsigned char keypad_scancodes[128] = {0};
+char regular_scancodes[1u<<8] = {0};
+char keypad_scancodes[1u<<8] = {0};
 static struct regular_scancodes_initor
 {
 	regular_scancodes_initor()
 	{
-		regular_scancodes[1] = 't';
+
+
+		regular_scancodes[1] = ' ';
 		regular_scancodes[2] = 'e';
-		regular_scancodes[4] = 'n';
-		regular_scancodes[8] = 'r';
-		regular_scancodes[16] = 's';
-		regular_scancodes[32] = 'i';
+		regular_scancodes[4] = 't';
+		regular_scancodes[8] = 'i';
+		regular_scancodes[16] = 'r';
+		regular_scancodes[32] = 's';
+		regular_scancodes[64] = 'n';
+		regular_scancodes[128] = 'a';
 		regular_scancodes[3] = 'o';
 		regular_scancodes[5] = 'l';
-		regular_scancodes[6] = 'a';
-		regular_scancodes[9] = 'd';
-		regular_scancodes[10] = 'c';
-		regular_scancodes[12] = 'u';
-		regular_scancodes[17] = 'p';
-		regular_scancodes[18] = 'f';
-		regular_scancodes[20] = 'm';
-		regular_scancodes[24] = 'v';
-		regular_scancodes[33] = 'h';
-		regular_scancodes[34] = 'z';
-		regular_scancodes[36] = 'x';
-		regular_scancodes[40] = 'b';
-		regular_scancodes[48] = 'y';
-		regular_scancodes[7] = 'k';
-		regular_scancodes[11] = 'w';
-		regular_scancodes[13] = 'j';
-		regular_scancodes[14] = 'g';
-		regular_scancodes[19] = 'q';
-		regular_scancodes[21] = '0';
-		regular_scancodes[22] = '/';
-		regular_scancodes[25] = '1';
-		regular_scancodes[26] = '3';
-		regular_scancodes[28] = '2';
-		regular_scancodes[35] = '7';
-		regular_scancodes[37] = '9';
-		regular_scancodes[38] = '5';
-		regular_scancodes[41] = '6';
-		regular_scancodes[42] = '8';
-		regular_scancodes[44] = '4';
-		regular_scancodes[49] = '.';
-		regular_scancodes[50] = ',';
-		regular_scancodes[52] = '(';
-		regular_scancodes[56] = ')';
-		regular_scancodes[15] = '-';
-		regular_scancodes[23] = ';';
-		regular_scancodes[27] = '=';
-		regular_scancodes[29] = KEY_RETURN;
-		regular_scancodes[30] = KEY_ESC;
-		regular_scancodes[39] = KEY_TAB;
-		regular_scancodes[43] = KEY_BACKSPACE;
-		regular_scancodes[45] = ' ';
-		regular_scancodes[46] = '>';
-		regular_scancodes[51] = '[';
-		regular_scancodes[53] = ']';
-		regular_scancodes[54] = '\\';
-		regular_scancodes[57] = '\'';
-
+		regular_scancodes[6] = 'c';
+		regular_scancodes[9] = '0';
+		regular_scancodes[10] = 'd';
+		regular_scancodes[12] = '.';
+		regular_scancodes[17] = ',';
+		regular_scancodes[18] = 'u';
+		regular_scancodes[20] = '-';
+		regular_scancodes[24] = '(';
+		regular_scancodes[33] = ')';
+		regular_scancodes[34] = '_';
+		regular_scancodes[36] = ';';
+		regular_scancodes[40] = 'p';
+		regular_scancodes[48] = 'f';
+		regular_scancodes[65] = 'm';
+		regular_scancodes[66] = 'h';
+		regular_scancodes[68] = '1';
+		regular_scancodes[72] = 'b';
+		regular_scancodes[80] = 'g';
+		regular_scancodes[96] = '/';
+		regular_scancodes[129] = 'k';
+		regular_scancodes[130] = '=';
+		regular_scancodes[132] = 'v';
+		regular_scancodes[136] = ':';
+		regular_scancodes[144] = '2';
+		regular_scancodes[160] = 'w';
+		regular_scancodes[192] = 'y';
+		regular_scancodes[7] = '3';
+		regular_scancodes[11] = '{';
+		regular_scancodes[13] = '<';
+		regular_scancodes[14] = '"';
+		regular_scancodes[19] = 'x';
+		regular_scancodes[21] = '4';
+		regular_scancodes[22] = '}';
+		regular_scancodes[25] = '6';
+		regular_scancodes[26] = '5';
+		regular_scancodes[28] = '7';
+		regular_scancodes[35] = '8';
+		regular_scancodes[37] = 'z';
+		regular_scancodes[38] = '*';
+		regular_scancodes[41] = '9';
+		regular_scancodes[42] = '>';
+		regular_scancodes[44] = '+';
+		regular_scancodes[49] = '[';
+		regular_scancodes[50] = ']';
+		regular_scancodes[52] = 'j';
+		regular_scancodes[56] = 'q';
+		regular_scancodes[67] = '&';
+		regular_scancodes[69] = '#';
+		regular_scancodes[70] = '\\';
+		regular_scancodes[73] = '\'';
+		regular_scancodes[74] = '!';
+		regular_scancodes[76] = '|';
+		regular_scancodes[81] = '%';
+		regular_scancodes[82] = '@';
+		regular_scancodes[84] = '?';
+		regular_scancodes[88] = '~';
+		regular_scancodes[97] = '$';
+		regular_scancodes[98] = '^';
+		regular_scancodes[100] = '`';
 
 
 		keypad_scancodes[1] = KEY_LEFT_CTRL;
@@ -247,13 +274,19 @@ void chord_to_scancode(const chord_t &chord)
 
 	//check for a thumbs only press.
 	if (chord.only_thumb()){
+		//do nothing?
+		if (chord == last_chord_sent)
+			return;
 		//mode switch...
-		if (mode == NORMAL)
-			mode == KEYPAD;
-		else if (mode == KEYPAD)
+		if (mode == NORMAL){
+			mode = KEYPAD;
+			Serial.println("swithnig to keypad mode");
+		} else if (mode == KEYPAD){
 			mode = NORMAL;
+			Serial.println("swithnig to normal mode");
+		}
 	
-		last_chord_sent = empty_chord;
+		last_chord_sent = chord;
 		last_key_send_time = millis();
 		Keyboard.releaseAll();
 		return;
@@ -271,8 +304,8 @@ void chord_to_scancode(const chord_t &chord)
 		return;
 	}
 
-	unsigned char keys_to_press[10] = {0};
-	unsigned int keys_to_press_count = 0;
+	char keys_to_press[10] = {0};
+	int keys_to_press_count = 0;
 
 
 	if (mode == NORMAL){
@@ -283,14 +316,14 @@ void chord_to_scancode(const chord_t &chord)
 		keys_to_press_count = 1;
 	}
 
-	if (chord.btn_6 && chord.btn_7){
+	if (chord.btn_thumb_r && chord.btn_thumb_l){
 		//both thumbs are pressed
 		keys_to_press[keys_to_press_count++] = 
 			KEY_LEFT_ALT;
-	} else if (chord.btn_6) {
+	} else if (chord.btn_thumb_l) {
 		keys_to_press[keys_to_press_count++] = 
 			KEY_LEFT_CTRL;
-	} else if (chord.btn_7) {
+	} else if (chord.btn_thumb_r) {
 		keys_to_press[keys_to_press_count++] = 
 			KEY_LEFT_SHIFT;
 	}
@@ -316,8 +349,12 @@ void chord_to_scancode(const chord_t &chord)
 	if (need_send){
 		last_key_send_time = millis();
 		last_chord_sent = chord;
-		for (unsigned i = 0; i < keys_to_press_count; ++i)
+		//we first send modifiers, and then the key.
+		//we give the keyboard driver 25 millis to respond.
+		for (int i = keys_to_press_count-1; i >= 0; --i){
 			Keyboard.press(keys_to_press[i]);
+			delay(25);
+		}
 	}
 
 	Keyboard.releaseAll();
@@ -336,12 +373,15 @@ void setup(){
 	pinMode(BTN_5_PIN, INPUT_PULLUP);
 	pinMode(BTN_6_PIN, INPUT_PULLUP);
 	pinMode(BTN_7_PIN, INPUT_PULLUP);
+	pinMode(BTN_THUMB_L, INPUT_PULLUP);
+	pinMode(BTN_THUMB_R, INPUT_PULLUP);
 
 	Keyboard.begin();
 }
 
 void loop(){
 	chord_t chord = from_btns();
+	//chord.print();
 	chord_to_scancode(chord);
 	//delay(50);
 }
