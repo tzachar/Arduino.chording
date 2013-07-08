@@ -17,104 +17,83 @@
 }
 
 
-\def\dispbyte#1{
-        \newcount\count
-        \count=#1
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-         \divide\count 2
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-         \divide\count 2
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-         \divide\count 2
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-         \divide\count 2
-         \hspace{1cm}
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-         \divide\count 2
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-         \divide\count 2
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-         \divide\count 2
-         {\ifodd\count $\blacksquare$\else$\square$\fi}%
-}
-
 
 \begin{document}
 
+\verb|KEY_RETURN| $\blacksquare\square\square\square$\hspace{2cm}$\square\square\square\square$\\
+\verb|KEY_ESC| $\square\blacksquare\square\square$\hspace{2cm}$\square\square\square\square$\\
+\verb|KEY_TAB| $\square\square\blacksquare\square$\hspace{2cm}$\square\square\square\square$\\
+\verb|KEY_BACKSPACE| $\square\square\square\blacksquare$\hspace{2cm}$\square\square\square\square$\\
+\verb|KEY_SPACE| $\square\square\square\square$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb| | $\square\square\square\square$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|e| $\square\square\square\square$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|t| $\square\square\square\square$\hspace{2cm}$\square\square\square\blacksquare$\\
+\verb|i| $\blacksquare\blacksquare\square\square$\hspace{2cm}$\square\square\square\square$\\
+\verb|r| $\blacksquare\square\blacksquare\square$\hspace{2cm}$\square\square\square\square$\\
+\verb|s| $\square\blacksquare\blacksquare\square$\hspace{2cm}$\square\square\square\square$\\
+\verb|n| $\blacksquare\square\square\blacksquare$\hspace{2cm}$\square\square\square\square$\\
+\verb|a| $\square\blacksquare\square\blacksquare$\hspace{2cm}$\square\square\square\square$\\
+\verb|o| $\square\square\blacksquare\blacksquare$\hspace{2cm}$\square\square\square\square$\\
+\verb|l| $\blacksquare\square\square\square$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|c| $\square\blacksquare\square\square$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|0| $\square\square\blacksquare\square$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|d| $\square\square\square\blacksquare$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|.| $\blacksquare\square\square\square$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|,| $\square\blacksquare\square\square$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|u| $\square\square\blacksquare\square$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|-| $\square\square\square\blacksquare$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|(| $\square\square\square\square$\hspace{2cm}$\blacksquare\blacksquare\square\square$\\
+\verb|)| $\blacksquare\square\square\square$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|_| $\square\blacksquare\square\square$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|;| $\square\square\blacksquare\square$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|p| $\square\square\square\blacksquare$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|f| $\square\square\square\square$\hspace{2cm}$\blacksquare\square\blacksquare\square$\\
+\verb|m| $\square\square\square\square$\hspace{2cm}$\square\blacksquare\blacksquare\square$\\
+\verb|h| $\blacksquare\square\square\square$\hspace{2cm}$\square\square\square\blacksquare$\\
+\verb|1| $\square\blacksquare\square\square$\hspace{2cm}$\square\square\square\blacksquare$\\
+\verb|b| $\square\square\blacksquare\square$\hspace{2cm}$\square\square\square\blacksquare$\\
+\verb|g| $\square\square\square\blacksquare$\hspace{2cm}$\square\square\square\blacksquare$\\
+\verb|/| $\square\square\square\square$\hspace{2cm}$\blacksquare\square\square\blacksquare$\\
+\verb|k| $\square\square\square\square$\hspace{2cm}$\square\blacksquare\square\blacksquare$\\
+\verb|=| $\square\square\square\square$\hspace{2cm}$\square\square\blacksquare\blacksquare$\\
+\verb|v| $\blacksquare\blacksquare\blacksquare\square$\hspace{2cm}$\square\square\square\square$\\
+\verb|:| $\blacksquare\blacksquare\square\blacksquare$\hspace{2cm}$\square\square\square\square$\\
+\verb|2| $\blacksquare\square\blacksquare\blacksquare$\hspace{2cm}$\square\square\square\square$\\
+\verb|w| $\square\blacksquare\blacksquare\blacksquare$\hspace{2cm}$\square\square\square\square$\\
+\verb|y| $\blacksquare\blacksquare\square\square$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|3| $\blacksquare\square\blacksquare\square$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|{| $\square\blacksquare\blacksquare\square$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|<| $\blacksquare\square\square\blacksquare$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|"| $\square\blacksquare\square\blacksquare$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|x| $\square\square\blacksquare\blacksquare$\hspace{2cm}$\blacksquare\square\square\square$\\
+\verb|4| $\blacksquare\blacksquare\square\square$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|}| $\blacksquare\square\blacksquare\square$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|6| $\square\blacksquare\blacksquare\square$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|5| $\blacksquare\square\square\blacksquare$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|8| $\square\blacksquare\square\blacksquare$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|7| $\square\square\blacksquare\blacksquare$\hspace{2cm}$\square\blacksquare\square\square$\\
+\verb|z| $\blacksquare\square\square\square$\hspace{2cm}$\blacksquare\blacksquare\square\square$\\
+\verb|*| $\square\blacksquare\square\square$\hspace{2cm}$\blacksquare\blacksquare\square\square$\\
+\verb|9| $\square\square\blacksquare\square$\hspace{2cm}$\blacksquare\blacksquare\square\square$\\
+\verb|>| $\square\square\square\blacksquare$\hspace{2cm}$\blacksquare\blacksquare\square\square$\\
+\verb|+| $\blacksquare\blacksquare\square\square$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|[| $\blacksquare\square\blacksquare\square$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|]| $\square\blacksquare\blacksquare\square$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|j| $\blacksquare\square\square\blacksquare$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|q| $\square\blacksquare\square\blacksquare$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|&| $\square\square\blacksquare\blacksquare$\hspace{2cm}$\square\square\blacksquare\square$\\
+\verb|#| $\blacksquare\square\square\square$\hspace{2cm}$\blacksquare\square\blacksquare\square$\\
+\verb|\| $\square\blacksquare\square\square$\hspace{2cm}$\blacksquare\square\blacksquare\square$\\
+\verb|'| $\square\square\blacksquare\square$\hspace{2cm}$\blacksquare\square\blacksquare\square$\\
+\verb|!| $\square\square\square\blacksquare$\hspace{2cm}$\blacksquare\square\blacksquare\square$\\
+\verb#|# $\blacksquare\square\square\square$\hspace{2cm}$\square\blacksquare\blacksquare\square$\\
+\verb|%| $\square\blacksquare\square\square$\hspace{2cm}$\square\blacksquare\blacksquare\square$\\
+\verb|@| $\square\square\blacksquare\square$\hspace{2cm}$\square\blacksquare\blacksquare\square$\\
+\verb|?| $\square\square\square\blacksquare$\hspace{2cm}$\square\blacksquare\blacksquare\square$\\
+\verb|~| $\square\square\square\square$\hspace{2cm}$\blacksquare\blacksquare\blacksquare\square$\\
+\verb|$| $\blacksquare\blacksquare\square\square$\hspace{2cm}$\square\square\square\blacksquare$\\
+\verb|^| $\blacksquare\square\blacksquare\square$\hspace{2cm}$\square\square\square\blacksquare$\\
+\verb|`| $\square\blacksquare\blacksquare\square$\hspace{2cm}$\square\square\square\blacksquare$\\
 
-\verb|KEY_RETURN| \dispbyte{1}\\
-\verb|KEY_ESC| \dispbyte{2}\\
-\verb|KEY_TAB| \dispbyte{4}\\
-\verb|KEY_BACKSPACE| \dispbyte{8}\\
-\verb|KEY_SPACE| \dispbyte{16}\\
-\verb| | \dispbyte{32}\\
-\verb|e| \dispbyte{64}\\
-\verb|t| \dispbyte{128}\\
-\verb|i| \dispbyte{3}\\
-\verb|r| \dispbyte{5}\\
-\verb|s| \dispbyte{6}\\
-\verb|n| \dispbyte{9}\\
-\verb|a| \dispbyte{10}\\
-\verb|o| \dispbyte{12}\\
-\verb|l| \dispbyte{17}\\
-\verb|c| \dispbyte{18}\\
-\verb|0| \dispbyte{20}\\
-\verb|d| \dispbyte{24}\\
-\verb|.| \dispbyte{33}\\
-\verb|,| \dispbyte{34}\\
-\verb|u| \dispbyte{36}\\
-\verb|-| \dispbyte{40}\\
-\verb|(| \dispbyte{48}\\
-\verb|)| \dispbyte{65}\\
-\verb|_| \dispbyte{66}\\
-\verb|;| \dispbyte{68}\\
-\verb|p| \dispbyte{72}\\
-\verb|f| \dispbyte{80}\\
-\verb|m| \dispbyte{96}\\
-\verb|h| \dispbyte{129}\\
-\verb|1| \dispbyte{130}\\
-\verb|b| \dispbyte{132}\\
-\verb|g| \dispbyte{136}\\
-\verb|/| \dispbyte{144}\\
-\verb|k| \dispbyte{160}\\
-\verb|=| \dispbyte{192}\\
-\verb|v| \dispbyte{7}\\
-\verb|:| \dispbyte{11}\\
-\verb|2| \dispbyte{13}\\
-\verb|w| \dispbyte{14}\\
-\verb|y| \dispbyte{19}\\
-\verb|3| \dispbyte{21}\\
-\verb|{| \dispbyte{22}\\
-\verb|<| \dispbyte{25}\\
-\verb|"| \dispbyte{26}\\
-\verb|x| \dispbyte{28}\\
-\verb|4| \dispbyte{35}\\
-\verb|}| \dispbyte{37}\\
-\verb|6| \dispbyte{38}\\
-\verb|5| \dispbyte{41}\\
-\verb|8| \dispbyte{42}\\
-\verb|7| \dispbyte{44}\\
-\verb|z| \dispbyte{49}\\
-\verb|*| \dispbyte{50}\\
-\verb|9| \dispbyte{52}\\
-\verb|>| \dispbyte{56}\\
-\verb|+| \dispbyte{67}\\
-\verb|[| \dispbyte{69}\\
-\verb|]| \dispbyte{70}\\
-\verb|j| \dispbyte{73}\\
-\verb|q| \dispbyte{74}\\
-\verb|&| \dispbyte{76}\\
-\verb|#| \dispbyte{81}\\
-\verb|\| \dispbyte{82}\\
-\verb|'| \dispbyte{84}\\
-\verb|!| \dispbyte{88}\\
-\verb#|# \dispbyte{97}\\
-\verb|%| \dispbyte{98}\\
-\verb|@| \dispbyte{100}\\
-\verb|?| \dispbyte{104}\\
-\verb|~| \dispbyte{112}\\
-\verb|$| \dispbyte{131}\\
-\verb|^| \dispbyte{133}\\
-\verb|`| \dispbyte{134}\\
 
 \end{document}

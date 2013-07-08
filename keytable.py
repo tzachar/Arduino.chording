@@ -37,6 +37,21 @@ def sort_by_freq(freqs):
     return ans
 
 
+def num_to_tex_boxes(num, bits):
+    ans = []
+    bits_middle = bits / 2
+    while bits > 0:
+        if num % 2 == 0:
+            ans.append("\square")
+        else:
+            ans.append("\\blacksquare")
+        bits = bits - 1
+        num = num / 2
+        if bits == bits_middle:
+            ans.append("$\\hspace{2cm}$")
+    return "$" + "".join(ans) + "$"
+
+
 if __name__ == '__main__':
     freqs = frequencies()
     chars_by_freq = [x for x in sort_by_freq(freqs) if curses.ascii.isprint(x)]
@@ -55,9 +70,9 @@ if __name__ == '__main__':
             btns = all_combinations(8, presses)
         cpp_code.append('regular_scancodes[%d] = \'%s\';' % (btns[0], c))
         if c != '|':
-            tex_code.append('\\verb|%s| \dispbyte{%d}\\\\' % (c, btns[0]))
+            tex_code.append('\\verb|%s| %s\\\\' % (c, num_to_tex_boxes(btns[0], 8)))
         else:
-            tex_code.append('\\verb#%s# \dispbyte{%d}\\\\' % (c, btns[0]))
+            tex_code.append('\\verb#%s# %s\\\\' % (c, num_to_tex_boxes(btns[0], 8)))
         btns = btns[1:]
     print "\n".join(cpp_code)
     print "\n".join(tex_code)
