@@ -33,17 +33,31 @@ def frequencies():
 
 
 def sort_by_freq(freqs):
-    return reversed(sorted(freqs.keys(), key=lambda x: freqs[x]))
+    ans = reversed(sorted(freqs.keys(), key=lambda x: freqs[x]))
+    return ans
 
 
 if __name__ == '__main__':
     freqs = frequencies()
     chars_by_freq = [x for x in sort_by_freq(freqs) if curses.ascii.isprint(x)]
+    chars_by_freq = ['KEY_RETURN',
+           'KEY_ESC',
+           'KEY_TAB',
+           'KEY_BACKSPACE',
+           'KEY_SPACE', ] + chars_by_freq
+    cpp_code = []
+    tex_code = []
     presses = 1
     btns = all_combinations(8, presses)
     for c in chars_by_freq:
         if len(btns) == 0:
             presses = presses + 1
             btns = all_combinations(8, presses)
-        print 'regular_scancodes[%d] = \'%s\';' % (btns[0], c)
+        cpp_code.append('regular_scancodes[%d] = \'%s\';' % (btns[0], c))
+        if c != '|':
+            tex_code.append('\\verb|%s| \dispbyte{%d}\\\\' % (c, btns[0]))
+        else:
+            tex_code.append('\\verb#%s# \dispbyte{%d}\\\\' % (c, btns[0]))
         btns = btns[1:]
+    print "\n".join(cpp_code)
+    print "\n".join(tex_code)
